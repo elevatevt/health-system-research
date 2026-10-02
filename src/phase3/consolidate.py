@@ -46,7 +46,11 @@ def check(r: dict, require_query: bool = True) -> dict:
     notes = []
     tier, conf = r.get("tier"), r.get("confidence")
     parent = (r.get("current_parent") or "").lower()
-    fp = str(r.get("now_for_profit", "")).lower() == "true" or any(re.search(rf"\b{re.escape(n)}\b", parent) for n in FOR_PROFIT_PARENTS)
+    answered = str(r.get("now_for_profit", "")).lower() in ("true", "false")
+    # The parent-name backstop only applies when the reviewer did not answer now_for_profit
+    # (e.g. Prime Healthcare Foundation is a nonprofit arm of a for-profit chain).
+    fp = str(r.get("now_for_profit", "")).lower() == "true" or (
+        not answered and any(re.search(rf"\b{re.escape(n)}\b", parent) for n in FOR_PROFIT_PARENTS))
     if fp:
         if str(r.get("now_for_profit", "")).lower() != "true":
             notes.append(f"current parent '{r.get('current_parent')}' is for-profit -> now_for_profit")
@@ -135,14 +139,22 @@ def main() -> None:
     args = ap.parse_args()
     default = {"pilot": RAW / "phase3_packets" / "group_*_result.json", "full": RAW / "phase3_full" / "group_*_result.json"}
     results = args.results or str(default[args.tag])
-    overrides = args.overrides or str({"pilot": RAW / "phase3_packets" / "pilot_refresh_result.json",
-                                       "full": RAW / "phase3_full" / "status_*.json"}[args.tag])
+    # Later globs win: status passes fix status fields; rechecks redo whole Unknown rows.
+    overrides = [args.overrides] if args.overrides else [str(g) for g in {
+        "pilot": [RAW / "phase3_packets" / "pilot_refresh_result.json"],
+        "full": [RAW / "phase3_full" / "status_*.json", RAW / "phase3_full" / "recheck_*.json"]}[args.tag]]
 
     by_id = {}
-    for pattern in [results] + ([overrides] if overrides else []):
+    for pattern in [results] + overrides:
         for f in sorted(glob.glob(pattern)):
             for r in json.loads(Path(f).read_text(encoding="utf-8")):
                 by_id[r["system_id"]] = {**by_id.get(r["system_id"], {}), **r}
+    # Hand-verified corrections win over everything (each entry carries a _why).
+    for r in json.loads((Path(__file__).parent / "manual_corrections.json").read_text(encoding="utf-8")):
+        if r["system_id"] in by_id:
+            fix = {k: v for k, v in r.items() if not k.startswith("_")}
+            by_id[r["system_id"]] = {**by_id[r["system_id"]], **fix,
+                                      "notes": ((by_id[r["system_id"]].get("notes") or "") + " [manual correction: " + r["_why"] + "]").strip()}
     df = pd.DataFrame([check(r, require_query=args.tag == "full") for r in by_id.values()])
     for c in STATUS_COLS:
         if c not in df:

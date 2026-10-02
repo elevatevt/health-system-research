@@ -1,6 +1,6 @@
 # US non-profit health systems research
 
-Public data only. Builds a list of US non-profit health systems (AHRQ definition) by HQ state, with hospital net patient revenue. Phase 3 (specialty pharmacy classification) comes next.
+Public data only. Builds a list of US non-profit health systems (AHRQ definition) by HQ state, with hospital net patient revenue. Phase 3 classifies each system's specialty pharmacy capability as the system exists today.
 
 ## Run
 
@@ -17,7 +17,11 @@ If AHRQ answers with a WAF challenge, `fetch_data.py` stops and names the file. 
 
 | File | Grain | Content |
 |---|---|---|
-| `outputs/nonprofit_systems_combined.csv` | system (480) | Phase 1 + Phase 2 columns; the Sheets load file |
+| `outputs/final_nonprofit_systems.csv` | system (479) | **The Sheets load file**: Phase 1 + 2 + 3 columns; systems now for-profit excluded |
+| `outputs/excluded_now_for_profit.csv` | system | Systems excluded because they became for-profit since 2023, with evidence |
+| `outputs/phase3_*_classification.csv` | system | Phase 3 tier calls with evidence (pilot = 25, full = 455) |
+| `outputs/phase3_acquirer_consistency.csv` | system | Absorbed systems whose tier differs from their listed acquirer's |
+| `outputs/nonprofit_systems_combined.csv` | system (480) | Phase 1 + Phase 2 columns only |
 | `outputs/nonprofit_systems.csv` | system | Phase 1: HQ, footprint, counts, beds, DSH, ownership |
 | `outputs/nonprofit_member_hospitals.csv` | hospital (2,977) | Phase 1 audit trail |
 | `outputs/nonprofit_system_revenue.csv` | system | Phase 2: Compendium NPR, FY2024 rebuild, flags |
@@ -34,3 +38,13 @@ If AHRQ answers with a WAF challenge, `fetch_data.py` stops and names the file. 
 - Source values are never corrected. Suspected cost-report errors (negative NPR, or a 0.5–2× swing between years) are flagged, not fixed. Unknown stays blank, never zero.
 
 Phase 0 verification and source notes are in `docs/phase0_findings.md`.
+
+## Phase 3 (specialty pharmacy)
+
+Run order: `src/phase3/evidence_structured.py` (URAC roster, ACHC directory, NPPES candidates) -> `build_packets.py` ->
+reviewer agents per `docs/phase3_reviewer_prompt.md` -> `status_batches.py` (status pass) -> `consolidate.py --tag full|pilot`
+-> `acquirer_report.py` -> `src/build_final.py`. Runbook: `docs/phase3_full_run.md`. Decisions: `docs/phase3_decisions.md`.
+
+Tiers: Owned, accredited / Owned, not accredited / Managed or partnered (incl. any system on the Shields partner list) /
+Infusion or home infusion only / None found / Unknown. Each row carries evidence URLs, confidence, status since 2023
+and any rule adjustments made by `consolidate.py`. Hand-verified fixes live in `src/phase3/manual_corrections.json`.

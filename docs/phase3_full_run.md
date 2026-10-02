@@ -1,5 +1,7 @@
 # Phase 3 full run: runbook
 
+**Status 2026-10-02: complete.** All 91 groups, the status pass and the Unknown recheck are done. Use this runbook only to re-run or refresh.
+
 Repo: `C:\dev\health-system-research`. Python: `.venv\Scripts\python.exe`. Public data only.
 
 ## State
