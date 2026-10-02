@@ -24,16 +24,17 @@ Repo: `C:\dev\health-system-research`. Python: `.venv\Scripts\python.exe`. Publi
    ```
    Run about 10 agents at a time and start the next wave as agents finish. Each agent uses about 100K tokens.
 3. When all groups have results, rerun step 1 and retry any group that is still missing or invalid, once.
-3a. **Status sweep for groups 001–009.** These ran before the status check was required, so their "unchanged" calls are thin. Start 2 background `general-purpose` Agents on `sonnet`, one for groups 001–005 and one for 006–009, with this prompt (fill in the group numbers and K = 1 or 2):
+3a. **Status pass.** Some results lack a verified status (no recorded search). Run:
    ```
-   Public-data, read-only web research; no logins or form submissions. Today is <date>.
-   For every system in C:\dev\health-system-research\data\raw\phase3_full\group_<NNN>_result.json for groups <list>, verify its status since 2023 with a dedicated search such as "<system name> merger OR acquisition OR renamed OR closed 2024 2025 2026" and, if needed, the system's own About page.
-   Write a JSON array to C:\dev\health-system-research\data\raw\phase3_full\status_sweep_<K>.json with one object per system and ONLY these keys: system_id, current_name, status_since_2023 (unchanged | renamed | acquired by | merged into | partly closed | closed), current_parent, status_evidence_url (required; a current page showing the status), status_change_date, now_for_profit (true if the system was acquired by or converted to a for-profit owner, else false).
-   Rules: a system that acquired or merged with another is "unchanged" (or "renamed" if its name changed); name the merger partner in current_parent only if this system was absorbed. Never write a status without status_evidence_url.
-   Validate with: C:\dev\health-system-research\.venv\Scripts\python.exe -c "import json; print(len(json.load(open(r'<file>', encoding='utf-8'))))"
-   Reply with only the systems whose status is not "unchanged".
+   .venv\Scripts\python.exe src\phase3\consolidate.py --tag full
+   .venv\Scripts\python.exe src\phase3\status_batches.py
    ```
-   If a sweep finds a system "acquired by" or "merged into" another, re-run that system's whole group with the reviewer prompt, since its tier may need to follow the acquirer.
+   It writes `data\raw\phase3_full\statusbatch_NN.json` (10 systems each) and prints an agent prompt template.
+   For each batch NN, start a background `general-purpose` Agent on `sonnet` with that template, filling {today},
+   {batch} = the statusbatch_NN.json path and {result} = `C:\dev\health-system-research\data\raw\phase3_full\status_pass_NN.json`.
+   Run about 10 at a time. Skip a batch whose status_pass_NN.json already exists and parses.
+   If the pass finds a system "acquired by" or "merged into" another, note it in the report; build_final.py flags
+   systems absorbed into another listed system, and Nate decides whether the tier should follow the acquirer.
 4. Merge and check:
    ```
    .venv\Scripts\python.exe src\phase3\consolidate.py --tag full

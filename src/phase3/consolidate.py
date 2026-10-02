@@ -6,7 +6,8 @@ Rule checks (violations are fixed down, never up, and logged in rule_adjustments
   - "None found" requires that the system's website was searched; otherwise it becomes "Unknown".
   - Owned/Managed tiers need at least one evidence URL; otherwise "Unknown".
   - status "closed": tier and confidence are blank (decision 2026-10-02).
-  - a status with no status_evidence_url becomes "unverified" (a status sweep re-checks these).
+  - a status without both status_evidence_url and status_search_query becomes "unverified";
+    the status pass (status_batches.py) re-checks these.
   - Shields partner list (decision 2026-10-02): a system on the list is "Managed or partnered" by
     Shields Health Solutions. Matched on distinctive name tokens plus a footprint state.
 Also notes URAC certificates past their roster expiration date; per decision 2026-10-02 they are
@@ -30,7 +31,7 @@ from evidence_structured import tokens  # noqa: E402
 
 SHIELDS_FILE = RAW / "shields_partners_20261002.txt"
 SHIELDS_URL = "https://shieldshealthsolutions.com/about-us/partner-health-systems"
-STATUS_COLS = ["current_name", "status_since_2023", "current_parent", "status_evidence_url", "status_change_date", "now_for_profit"]
+STATUS_COLS = ["current_name", "status_since_2023", "current_parent", "status_evidence_url", "status_change_date", "status_search_query", "now_for_profit"]
 # Backstop for now_for_profit (decision 2026-10-02: systems now for-profit are excluded from the deliverable).
 FOR_PROFIT_PARENTS = ["hca", "tenet", "community health systems", "lifepoint", "universal health services", "ardent",
                       "prime healthcare", "scionhealth", "steward", "quorum", "envision", "surgery partners"]
@@ -41,7 +42,7 @@ CONF = ["High", "Medium", "Low"]
 LIST_COLS = ["pharmacy_names", "accreditations", "evidence_urls", "confirmed_candidates", "rejected_candidates", "sources_searched"]
 
 
-def check(r: dict) -> dict:
+def check(r: dict, require_query: bool = True) -> dict:
     notes = []
     tier, conf = r.get("tier"), r.get("confidence")
     parent = (r.get("current_parent") or "").lower()
@@ -52,8 +53,8 @@ def check(r: dict) -> dict:
         return {**r, "now_for_profit": True, "tier": "", "confidence": "", "rule_adjustments": "; ".join(notes)}
     r = {**r, "now_for_profit": False}
     status = (r.get("status_since_2023") or "").strip()
-    if status and not r.get("status_evidence_url"):
-        notes.append(f"status '{status}' has no evidence URL -> unverified")
+    if status and status != "unverified" and not (r.get("status_evidence_url") and (r.get("status_search_query") or not require_query)):
+        notes.append(f"status '{status}' lacks a recorded search or evidence URL -> unverified")
         r = {**r, "status_since_2023": "unverified"}
     if status.lower() == "closed" and r["status_since_2023"] == "closed":
         return {**r, "tier": "", "confidence": "", "rule_adjustments": "; ".join(notes)}
@@ -135,14 +136,14 @@ def main() -> None:
     default = {"pilot": RAW / "phase3_packets" / "group_*_result.json", "full": RAW / "phase3_full" / "group_*_result.json"}
     results = args.results or str(default[args.tag])
     overrides = args.overrides or str({"pilot": RAW / "phase3_packets" / "pilot_refresh_result.json",
-                                       "full": RAW / "phase3_full" / "status_sweep_*.json"}[args.tag])
+                                       "full": RAW / "phase3_full" / "status_*.json"}[args.tag])
 
     by_id = {}
     for pattern in [results] + ([overrides] if overrides else []):
         for f in sorted(glob.glob(pattern)):
             for r in json.loads(Path(f).read_text(encoding="utf-8")):
                 by_id[r["system_id"]] = {**by_id.get(r["system_id"], {}), **r}
-    df = pd.DataFrame([check(r) for r in by_id.values()])
+    df = pd.DataFrame([check(r, require_query=args.tag == "full") for r in by_id.values()])
     for c in STATUS_COLS:
         if c not in df:
             df[c] = ""

@@ -9,6 +9,11 @@ Outputs:
 """
 import pandas as pd
 
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent / "phase3"))
 from common import OUT
 
 PHASE3_COLS = {
@@ -35,12 +40,26 @@ def main() -> None:
     df["reviewed"] = df.reviewed.fillna(False).astype(bool)
     fp = df.now_for_profit.astype(str).str.lower() == "true"
 
+    # A system absorbed into another listed system is flagged so totals don't count it twice.
+    from phase3.evidence_structured import tokens
+    name_tok = {sid: tokens(n) for sid, n in zip(df.system_id, df.system_name)}
+    def absorbed_into(r):
+        if r.status_since_2023 not in ("acquired by", "merged into") or not isinstance(r.current_parent, str):
+            return ""
+        pt = tokens(r.current_parent)
+        hits = [sid for sid, nt in name_tok.items() if sid != r.system_id and nt and pt and (nt <= pt or pt <= nt)]
+        return ";".join(hits)
+    df["absorbed_into_system_id"] = [absorbed_into(r) for r in df.itertuples()]
+
     excluded = df[fp][["system_id", "system_name", "hq_state", "current_name", "current_parent",
                        "status_since_2023", "status_change_date", "status_evidence_url"]]
     final = df[~fp].drop(columns=["now_for_profit"])
     final.to_csv(OUT / "final_nonprofit_systems.csv", index=False)
     excluded.to_csv(OUT / "excluded_now_for_profit.csv", index=False)
 
+    dup = final[final.absorbed_into_system_id != ""]
+    if len(dup):
+        print("absorbed into another listed system:", "; ".join(dup.system_name + " -> " + dup.absorbed_into_system_id))
     print(f"final: {len(final)} systems ({final.reviewed.sum()} with Phase 3 results); excluded now for-profit: {len(excluded)}")
     print(final.loc[final.reviewed, "sp_tier"].fillna("(closed)").replace("", "(closed)").value_counts().to_string())
     if len(excluded):
