@@ -14,6 +14,7 @@ First establish the system's current status, using the system's website and news
 - Acquired by or merged into another system: the tier reflects the acquirer's specialty pharmacy if it serves these hospitals. Say "via <acquirer>" in tier_source and give current_parent.
 - Partly closed: classify the hospitals still operating.
 - Closed entirely: set tier to "" (blank) and confidence to "". Give the closure evidence.
+- Now for-profit (acquired by or converted to a for-profit owner such as HCA, Tenet, CHS, LifePoint, UHS, Ardent, Prime or ScionHealth): set now_for_profit to true, tier "" and confidence "", give the evidence, and skip the pharmacy research. These systems are excluded from the deliverable (decision 2026-10-02). Otherwise now_for_profit is false.
 
 FOR EACH SYSTEM:
 1. Search the system's own website and press releases for "specialty pharmacy", "home infusion", "infusion pharmacy" and "outpatient pharmacy". Use WebSearch and WebFetch, and record each site/page you checked in sources_searched.
@@ -42,7 +43,7 @@ MINIMUM WORK PER SYSTEM (do not go below this):
 Stay around 3-6 searches/fetches per system. Do not fetch the URAC or ACHC directories; the candidates already carry their evidence URLs.
 
 OUTPUT: write a JSON array (one object per system in the packet) to {result}, with these keys:
-system_id, system_name, current_name, status_since_2023, current_parent, status_evidence_url, status_change_date, tier, confidence, tier_source (short: which source(s) drove the call), pharmacy_names (list), owning_entity, accreditations (list like "URAC SPP010062 Specialty Pharmacy", "ACHC 88449 Specialty Pharmacy Services"), manager_partner (name or ""), evidence_urls (list), evidence_date (publication or last-updated date of the key web source if shown, otherwise {today}), confirmed_candidates (list of ids), rejected_candidates (list of "id: reason"), sources_searched (list), notes (max 2 sentences).
+system_id, system_name, current_name, status_since_2023, current_parent, status_evidence_url, status_change_date, now_for_profit (true/false), tier, confidence, tier_source (short: which source(s) drove the call), pharmacy_names (list), owning_entity, accreditations (list like "URAC SPP010062 Specialty Pharmacy", "ACHC 88449 Specialty Pharmacy Services"), manager_partner (name or ""), evidence_urls (list), evidence_date (publication or last-updated date of the key web source if shown, otherwise {today}), confirmed_candidates (list of ids), rejected_candidates (list of "id: reason"), sources_searched (list), notes (max 2 sentences).
 Validate the file by running:
   C:\dev\health-system-research\.venv\Scripts\python.exe -c "import json; print(len(json.load(open(r'{result}', encoding='utf-8'))))"
 Fix it if that fails. Then reply with only: "<packet name>: <n> systems written" plus at most 3 lines of reviewer flags.

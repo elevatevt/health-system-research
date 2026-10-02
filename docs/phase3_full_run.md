@@ -28,7 +28,7 @@ Repo: `C:\dev\health-system-research`. Python: `.venv\Scripts\python.exe`. Publi
    ```
    Public-data, read-only web research; no logins or form submissions. Today is <date>.
    For every system in C:\dev\health-system-research\data\raw\phase3_full\group_<NNN>_result.json for groups <list>, verify its status since 2023 with a dedicated search such as "<system name> merger OR acquisition OR renamed OR closed 2024 2025 2026" and, if needed, the system's own About page.
-   Write a JSON array to C:\dev\health-system-research\data\raw\phase3_full\status_sweep_<K>.json with one object per system and ONLY these keys: system_id, current_name, status_since_2023 (unchanged | renamed | acquired by | merged into | partly closed | closed), current_parent, status_evidence_url (required; a current page showing the status), status_change_date.
+   Write a JSON array to C:\dev\health-system-research\data\raw\phase3_full\status_sweep_<K>.json with one object per system and ONLY these keys: system_id, current_name, status_since_2023 (unchanged | renamed | acquired by | merged into | partly closed | closed), current_parent, status_evidence_url (required; a current page showing the status), status_change_date, now_for_profit (true if the system was acquired by or converted to a for-profit owner, else false).
    Rules: a system that acquired or merged with another is "unchanged" (or "renamed" if its name changed); name the merger partner in current_parent only if this system was absorbed. Never write a status without status_evidence_url.
    Validate with: C:\dev\health-system-research\.venv\Scripts\python.exe -c "import json; print(len(json.load(open(r'<file>', encoding='utf-8'))))"
    Reply with only the systems whose status is not "unchanged".
@@ -38,8 +38,10 @@ Repo: `C:\dev\health-system-research`. Python: `.venv\Scripts\python.exe`. Publi
    ```
    .venv\Scripts\python.exe src\phase3\consolidate.py --tag full
    .venv\Scripts\python.exe src\phase3\consolidate.py --tag pilot
+   .venv\Scripts\python.exe src\build_final.py
    ```
-5. Commit `outputs/phase3_full_*` and `outputs/phase3_pilot_*` with a plain `git commit`, using the global git identity; never override user.email. Do **not** push; Nate pushes.
+   `build_final.py` writes the deliverable `outputs/final_nonprofit_systems.csv` and lists the excluded for-profit conversions in `outputs/excluded_now_for_profit.csv`.
+5. Commit `outputs/phase3_full_*`, `outputs/phase3_pilot_*`, `outputs/final_nonprofit_systems.csv` and `outputs/excluded_now_for_profit.csv` with a plain `git commit`, using the global git identity; never override user.email. Do **not** push; Nate pushes.
 6. Report the tier counts, the systems with status ≠ unchanged, the rule adjustments, and any groups that failed.
 
 ## Do not

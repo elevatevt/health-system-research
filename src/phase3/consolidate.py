@@ -30,7 +30,10 @@ from evidence_structured import tokens  # noqa: E402
 
 SHIELDS_FILE = RAW / "shields_partners_20261002.txt"
 SHIELDS_URL = "https://shieldshealthsolutions.com/about-us/partner-health-systems"
-STATUS_COLS = ["current_name", "status_since_2023", "current_parent", "status_evidence_url", "status_change_date"]
+STATUS_COLS = ["current_name", "status_since_2023", "current_parent", "status_evidence_url", "status_change_date", "now_for_profit"]
+# Backstop for now_for_profit (decision 2026-10-02: systems now for-profit are excluded from the deliverable).
+FOR_PROFIT_PARENTS = ["hca", "tenet", "community health systems", "lifepoint", "universal health services", "ardent",
+                      "prime healthcare", "scionhealth", "steward", "quorum", "envision", "surgery partners"]
 
 TIERS = ["Owned, accredited", "Owned, not accredited", "Managed or partnered",
          "Infusion or home infusion only", "None found", "Unknown"]
@@ -41,6 +44,13 @@ LIST_COLS = ["pharmacy_names", "accreditations", "evidence_urls", "confirmed_can
 def check(r: dict) -> dict:
     notes = []
     tier, conf = r.get("tier"), r.get("confidence")
+    parent = (r.get("current_parent") or "").lower()
+    fp = str(r.get("now_for_profit", "")).lower() == "true" or any(n in parent for n in FOR_PROFIT_PARENTS)
+    if fp:
+        if str(r.get("now_for_profit", "")).lower() != "true":
+            notes.append(f"current parent '{r.get('current_parent')}' is for-profit -> now_for_profit")
+        return {**r, "now_for_profit": True, "tier": "", "confidence": "", "rule_adjustments": "; ".join(notes)}
+    r = {**r, "now_for_profit": False}
     status = (r.get("status_since_2023") or "").strip()
     if status and not r.get("status_evidence_url"):
         notes.append(f"status '{status}' has no evidence URL -> unverified")
@@ -156,7 +166,8 @@ def main() -> None:
              f"Systems with no reviewer result: {missing}. Rule adjustments: {(df.rule_adjustments.fillna('') != '').sum()}. "
              f"URAC certificates past roster expiry (treated as current): {(df.accreditation_expiry_check != '').sum()}.", "",
              "| Tier | Systems |", "|---|---|", *[f"| {t} | {(df.tier == t).sum()} |" for t in TIERS],
-             f"| (closed, no tier) | {(df.status_since_2023.fillna('').str.lower() == 'closed').sum()} |", "",
+             f"| (closed, no tier) | {(df.status_since_2023.fillna('').str.lower() == 'closed').sum()} |",
+             f"| (now for-profit, excluded) | {(df.now_for_profit == True).sum()} |", "",
              "| System | HQ | Status | Tier | Conf. | Partner | Source | Notes |", "|---|---|---|---|---|---|---|---|",
              *[f"| {r.system_name} | {r.hq_state} | {r.status_since_2023} {('-> ' + r.current_name) if r.current_name and r.current_name != r.system_name else ''} | {r.tier} | {r.confidence} | {r.manager_partner or ''} | "
                f"{r.tier_source or ''} | {(r.notes or '')} {('**' + r.rule_adjustments + '**') if r.rule_adjustments else ''} |"

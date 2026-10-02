@@ -11,6 +11,7 @@ Systems with no reviewer result: 410. Rule adjustments: 1. URAC certificates pas
 | None found | 0 |
 | Unknown | 410 |
 | (closed, no tier) | 0 |
+| (now for-profit, excluded) | 0 |
 
 | System | HQ | Status | Tier | Conf. | Partner | Source | Notes |
 |---|---|---|---|---|---|---|---|

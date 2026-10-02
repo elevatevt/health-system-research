@@ -1,6 +1,6 @@
 # Phase 3 pilot classification (25 systems)
 
-Systems with no reviewer result: 0. Rule adjustments: 1. URAC certificates past roster expiry (treated as current): 3.
+Systems with no reviewer result: 0. Rule adjustments: 2. URAC certificates past roster expiry (treated as current): 3.
 
 | Tier | Systems |
 |---|---|
@@ -8,9 +8,10 @@ Systems with no reviewer result: 0. Rule adjustments: 1. URAC certificates past 
 | Owned, not accredited | 1 |
 | Managed or partnered | 7 |
 | Infusion or home infusion only | 0 |
-| None found | 7 |
+| None found | 6 |
 | Unknown | 1 |
 | (closed, no tier) | 0 |
+| (now for-profit, excluded) | 1 |
 
 | System | HQ | Status | Tier | Conf. | Partner | Source | Notes |
 |---|---|---|---|---|---|---|---|
@@ -23,7 +24,7 @@ Systems with no reviewer result: 0. Rule adjustments: 1. URAC certificates past 
 | Augusta Health | VA | unchanged  | None found | Medium |  | No accreditation candidates; augustahealth.com pharmacy page lists only retail outpatient pharmacy and inpatient pharmacy | Retail outpatient pharmacy only; no mention of specialty or home infusion. A UVA Health affiliation appeared in search results (UVA Augusta Pharmacy listing) but was not investigated for specialty services.  |
 | Jefferson Hospital Association | AR | acquired by -> Jefferson Regional Medical Center (Jefferson Hospital Association, Inc.) | None found | Medium |  | No candidates; jrmc.org and web search show only retail/outpatient pharmacy | Only a retail/outpatient pharmacy with 340B participation found; no specialty or infusion pharmacy on system site or press. Confidence medium because absence rests on web search of a small site.  |
 | Regional One Health | TN | unchanged  | Owned, accredited | High |  | URAC SPP010424 + ACHC 96582/96583/96584 + system website (operated by Regional One itself, not Shields) | Website states the pharmacy is operated by Regional One Health with no third-party partner named. NPPES specialty taxonomy is non-primary on all three NPIs, but they co-locate with the confirmed accredited sites.  |
-| Catholic Medical Center | NH | acquired by  | None found | Low |  | No candidates; CMC website pharmacies page lists only community pharmacies | A search summary suggested CMC is affiliated with New England Life Care (independent nonprofit home infusion/specialty provider); I could not verify it (page returned 503), so it is not counted as a CMC pharmacy.  |
+| Catholic Medical Center | NH | acquired by  |  |  |  | No candidates; CMC website pharmacies page lists only community pharmacies | A search summary suggested CMC is affiliated with New England Life Care (independent nonprofit home infusion/specialty provider); I could not verify it (page returned 503), so it is not counted as a CMC pharmacy. **current parent 'HCA Healthcare' is for-profit -> now_for_profit** |
 | Yuma Regional Medical Center | AZ | renamed -> Onvida Health | None found | Medium |  | Onvida Health website and press releases show only a hospital oncology pharmacy, a ProxsysRx-run retail pharmacy and an outpatient infusion clinic; no candidates | Renamed Onvida Health (Oct 2024); no specialty or home-infusion pharmacy found on its site. The Foothills retail pharmacy is run by ProxsysRx and is not a specialty pharmacy; not on Shields list.  |
 | Benefis Health System | MT | unchanged  | Owned, accredited | High |  | URAC SPP010275 + ACHC 89958 + Benefis system news page | Benefis describes an entity-owned ambulatory, specialty and home infusion pharmacy; launched 2023. Visante is a 340B consultant, not a pharmacy manager; the NPPES hit lists specialty taxonomy as non-primary.  |
 | Lexington Medical Center | SC | renamed -> Lexington Health (formerly Lexington Medical Center) | Unknown | Low |  | All candidates rejected; only third-party directory listings for system oncology outpatient dispensing pharmacy | A system oncology outpatient dispensing pharmacy exists but lexhealth.com did not confirm it as specialty or accredited; could be Owned, not accredited with direct confirmation. Palmetto Infusion Services appears unrelated (not verified).  |
