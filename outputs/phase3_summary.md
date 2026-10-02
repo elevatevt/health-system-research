@@ -6,9 +6,9 @@ Systems in deliverable: **478** (480 AHRQ non-profit systems minus 2 now for-pro
 
 | Tier | Total | High | Medium | Low |
 |---|---|---|---|---|
-| Owned, accredited | 194 | 160 | 32 | 2 |
+| Owned, accredited | 196 | 162 | 32 | 2 |
 | Managed or partnered | 95 | 72 | 20 | 3 |
-| Owned, not accredited | 54 | 0 | 30 | 24 |
+| Owned, not accredited | 52 | 0 | 28 | 24 |
 | Infusion or home infusion only | 12 | 0 | 5 | 7 |
 | None found | 118 | 0 | 52 | 66 |
 | Unknown | 5 | 0 | 0 | 5 |

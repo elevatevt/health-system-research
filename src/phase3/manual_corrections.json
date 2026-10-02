@@ -1,5 +1,141 @@
 [
-  {"system_id": "HSI00000216", "_why": "Group 055 marked 'renamed' because a rehab subsidiary rebranded; the system itself is unchanged (agent's own note).",
-   "status_since_2023": "unchanged", "current_name": "Childrens National Health System",
-   "status_search_query": "manual correction 2026-10-02 from reviewer note"}
+ {
+  "system_id": "HSI00000216",
+  "_why": "Group 055 marked 'renamed' because a rehab subsidiary rebranded; the system itself is unchanged (agent's own note).",
+  "status_since_2023": "unchanged",
+  "current_name": "Childrens National Health System",
+  "status_search_query": "manual correction 2026-10-02 from reviewer note"
+ },
+ {
+  "system_id": "HSI00000511",
+  "_why": "Address cross-check: NPI 1710698717 (MIMC Specialty and Home Infusion Pharmacy, 7101 US Hwy 90 Daphne) matches URAC SPP010729 / ACHC 80629 held by subsidiary Gulf Health Hospitals (NBI Specialty Pharmacy).",
+  "accreditations": [
+   "URAC Specialty Pharmacy (per web page, no cert number)",
+   "ACHC Specialty Pharmacy (per web page, no ID)",
+   "URAC SPP010729 Specialty Pharmacy",
+   "ACHC 80629 Specialty Pharmacy Services",
+   "ACHC 93133 Specialty Pharmacy Services"
+  ],
+  "evidence_urls": [
+   "https://www.infirmaryhealth.org/services/pharmacy/specialty-pharmacy/",
+   "https://www.infirmaryhealth.org/services/pharmacy/home-infusion-pharmacy/",
+   "https://npiregistry.cms.hhs.gov/provider-view/1710698717",
+   "https://www.urac.org/directory/accreditation-details/?certification=SPP010729"
+  ],
+  "confidence": "High"
+ },
+ {
+  "system_id": "HSI00000536",
+  "_why": "Address cross-check: cited NPI 1366999021 shares its address with URAC SPP010725 (Kaiser Foundation Health Plan, Inc.).",
+  "accreditations": [
+   "ACHC 97980 Specialty Pharmacy Services",
+   "URAC SPP010725 Specialty Pharmacy"
+  ],
+  "evidence_urls": [
+   "https://organization.achc.org/print?legalCompanyName=Kaiser%20Foundation%20Health%20Plan%20Inc&dbaCompanyName=Kaiser%20Permanente%20Pharmacy%20#329&companyID=97980&full_address=San%20Francisco%20,%20CA%2094118&physicalAddress=Specialty%20Pharmacy%204131%20Geary%20Blvd,%20Room%20112,",
+   "https://npiregistry.cms.hhs.gov/provider-view/1366999021",
+   "https://pharmacy-near-me.com/pharmacy/kaiser-permanente-pharmacy-329-94118-4131-geary-blvd-floor-1-san-francisco-ca-94118-1366999021/",
+   "https://www.urac.org/directory/accreditation-details/?certification=SPP010725"
+  ],
+  "confidence": "High"
+ },
+ {
+  "system_id": "HSI00000430",
+  "_why": "Address cross-check: cited NPI 1730982596 shares its address with URAC SPP010649 held by member hospital Our Lady of Lourdes Memorial Hospital (Guthrie).",
+  "accreditations": [
+   "URAC SPP010649 Specialty Pharmacy"
+  ],
+  "evidence_urls": [
+   "https://www.guthrie.org/services-treatments/specialty-pharmacy",
+   "https://npiregistry.cms.hhs.gov/provider-view/1730982596",
+   "https://www.urac.org/directory/accreditation-details/?certification=SPP010649"
+  ],
+  "tier": "Owned, accredited",
+  "tier_source": "URAC SPP010649 Specialty Pharmacy (address cross-check) + prior evidence: Guthrie website specialty pharmacy page plus NPPES specialty record; no accreditation found; not on Shields list",
+  "confidence": "Medium"
+ },
+ {
+  "system_id": "HSI00000059",
+  "_why": "Address cross-check: cited TidalHealth NPI 1871031559 shares its address with URAC SPP010639 / ACHC 97606 (TidalHealth Peninsula Regional, the parent since the merger).",
+  "accreditations": [
+   "URAC SPP010639 Specialty Pharmacy",
+   "ACHC 97606 Specialty Pharmacy Services"
+  ],
+  "evidence_urls": [
+   "https://www.tidalhealth.org/our-locations/tidalhealth-specialty-pharmacy",
+   "https://npiregistry.cms.hhs.gov/provider-view/1871031559",
+   "https://www.urac.org/directory/accreditation-details/?certification=SPP010639"
+  ],
+  "tier": "Owned, accredited",
+  "tier_source": "URAC SPP010639 Specialty Pharmacy (address cross-check) + prior evidence: via TidalHealth: TidalHealth Specialty Pharmacy (Salisbury MD) own site page plus NPPES specialty taxonomy; no accreditation found",
+  "confidence": "Medium"
+ },
+ {
+  "system_id": "HSI00000972",
+  "_why": "Address cross-check: cited NPI 1174693592 = Proprium Pharmacy (Sentara-owned), URAC SPP010316 / ACHC 75306.",
+  "accreditations": [
+   "URAC SPP010317 Specialty Pharmacy",
+   "ACHC 94616 Specialty Pharmacy Services",
+   "ACHC 70366 Infusion Pharmacy Services",
+   "ACHC 89024 Infusion Pharmacy Services",
+   "ACHC 70366 Home Infusion Therapy",
+   "URAC SPP010316 Specialty Pharmacy",
+   "ACHC 75306 Specialty Pharmacy Services"
+  ],
+  "evidence_urls": [
+   "https://shieldshealthsolutions.com/patients-with-complex-chronic-illnesses-can-now-receive-more-affordable-medications-and-new-pharmacy-services-with-no-added-costs/",
+   "https://www.urac.org/directory/accreditation-details/?certification=SPP010317",
+   "https://shieldshealthsolutions.com/about-us/partner-health-systems",
+   "https://www.urac.org/directory/accreditation-details/?certification=SPP010316"
+  ]
+ },
+ {
+  "system_id": "HSI00000773",
+  "_why": "Address cross-check: cited NPI 1679160121 shares its address with ACHC 77616 (NH NHRMC Specialty Pharmacy).",
+  "accreditations": [
+   "URAC SPP010054 Specialty Pharmacy",
+   "URAC SPP010648 Specialty Pharmacy",
+   "ACHC 77615 Specialty Pharmacy Services",
+   "ACHC 78082 Specialty Pharmacy Services",
+   "ACHC 78733 Specialty Pharmacy Services",
+   "ACHC 82038 Specialty Pharmacy Services",
+   "ACHC 77616 Specialty Pharmacy Services"
+  ],
+  "evidence_urls": [
+   "https://www.novanthealth.org/healthy-headlines/novant-health-specialty-pharmacy-improves-patient-outcomes",
+   "https://www.novanthealth.org/services/pharmacy/",
+   "https://www.urac.org/directory/accreditation-details/?certification=SPP010054",
+   "https://www.urac.org/directory/accreditation-details/?certification=SPP010648",
+   "https://shieldshealthsolutions.com/about-us/partner-health-systems"
+  ]
+ },
+ {
+  "system_id": "HSI00000388",
+  "_why": "Address cross-check: cited NPI 1346366879 shares its address with ACHC 95240 (Geisinger Home Infusion).",
+  "accreditations": [
+   "URAC SPP010578 Specialty Pharmacy",
+   "ACHC 79146 Specialty Pharmacy Services",
+   "ACHC 89179 Specialty Pharmacy Services",
+   "ACHC 89180 Specialty Pharmacy Services",
+   "ACHC 89181 Specialty Pharmacy Services",
+   "ACHC 95240 Infusion Pharmacy Services"
+  ],
+  "evidence_urls": [
+   "https://www.urac.org/directory/accreditation-details/?certification=SPP010578",
+   "https://www.prnewswire.com/news-releases/risant-health-completes-acquisition-of-geisinger-302105927.html"
+  ]
+ },
+ {
+  "system_id": "HSI00000585",
+  "_why": "Address cross-check: cited NPI 1629622634 shares its address with ACHC 74816 (Brown University Health Specialty Pharmacy).",
+  "accreditations": [
+   "URAC SPP010067 Specialty Pharmacy",
+   "ACHC 74816 Specialty Pharmacy Services"
+  ],
+  "evidence_urls": [
+   "https://www.brownhealth.org/centers-services/pharmacy",
+   "https://www.urac.org/directory/accreditation-details/?certification=SPP010067",
+   "https://www.brownhealth.org/news/lifespan-brown-university-health"
+  ]
+ }
 ]

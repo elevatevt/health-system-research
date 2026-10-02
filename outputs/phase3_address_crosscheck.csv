@@ -1,0 +1,4 @@
+system_id,system_name,tier,confidence,npi,record,program,organization
+HSI00000455,Hawaii Pacific Health,"Owned, accredited",High,1295443216,URAC SPP010708,Specialty Pharmacy,"Value Drug, Ltd. d/b/a Pharmacare"
+HSI00000455,Hawaii Pacific Health,"Owned, accredited",High,1295443216,URAC IPP-1,Infusion Pharmacy,"Value Drug, Ltd. d/b/a Pharmacare"
+HSI00000455,Hawaii Pacific Health,"Owned, accredited",High,1295443216,ACHC 75902,Pharmacy: Specialty Pharmacy Services,CVS Health / CVS/pharmacy #2915

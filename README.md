@@ -43,7 +43,7 @@ Phase 0 verification and source notes are in `docs/phase0_findings.md`.
 
 Run order: `src/phase3/evidence_structured.py` (URAC roster, ACHC directory, NPPES candidates) -> `build_packets.py` ->
 reviewer agents per `docs/phase3_reviewer_prompt.md` -> `status_batches.py` (status pass) -> `consolidate.py --tag full|pilot`
--> `acquirer_report.py` -> `src/build_final.py`. Runbook: `docs/phase3_full_run.md`. Decisions: `docs/phase3_decisions.md`.
+-> `address_crosscheck.py` (review hits into `manual_corrections.json`) -> `acquirer_report.py` -> `src/build_final.py`. Runbook: `docs/phase3_full_run.md`. Decisions: `docs/phase3_decisions.md`.
 
 Tiers: Owned, accredited / Owned, not accredited / Managed or partnered (incl. any system on the Shields partner list) /
 Infusion or home infusion only / None found / Unknown. Each row carries evidence URLs, confidence, status since 2023
