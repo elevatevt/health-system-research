@@ -35,7 +35,11 @@ Unknown is not "None found". Never infer absence from silence without having sea
 
 CONFIDENCE: High = a confirmed accreditation record (or explicit system web page) plus a second agreeing source. Medium = one strong source. Low = NPPES-only or ambiguous evidence. A single NPPES hit with no corroboration is capped at Low.
 
-Keep it efficient: about 4-6 searches/fetches per system. Do not fetch the URAC or ACHC directories; the candidates already carry their evidence URLs.
+MINIMUM WORK PER SYSTEM (do not go below this):
+- One status search, e.g. "<system name> merger OR acquisition OR renamed OR closed 2024 2025 2026". Put the URL that shows the current status in status_evidence_url, even when the status is "unchanged" (a current system page or news item showing the same name and structure is fine). Never write "unchanged" without that URL.
+- One specialty-pharmacy search.
+- Fetch at least one page on the system's own website whenever no URAC/ACHC candidate is confirmed, or the tier would be "None found", "Unknown" or "Owned, not accredited".
+Stay around 3-6 searches/fetches per system. Do not fetch the URAC or ACHC directories; the candidates already carry their evidence URLs.
 
 OUTPUT: write a JSON array (one object per system in the packet) to {result}, with these keys:
 system_id, system_name, current_name, status_since_2023, current_parent, status_evidence_url, status_change_date, tier, confidence, tier_source (short: which source(s) drove the call), pharmacy_names (list), owning_entity, accreditations (list like "URAC SPP010062 Specialty Pharmacy", "ACHC 88449 Specialty Pharmacy Services"), manager_partner (name or ""), evidence_urls (list), evidence_date (publication or last-updated date of the key web source if shown, otherwise {today}), confirmed_candidates (list of ids), rejected_candidates (list of "id: reason"), sources_searched (list), notes (max 2 sentences).

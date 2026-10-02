@@ -6,6 +6,7 @@ Rule checks (violations are fixed down, never up, and logged in rule_adjustments
   - "None found" requires that the system's website was searched; otherwise it becomes "Unknown".
   - Owned/Managed tiers need at least one evidence URL; otherwise "Unknown".
   - status "closed": tier and confidence are blank (decision 2026-10-02).
+  - a status with no status_evidence_url becomes "unverified" (a status sweep re-checks these).
   - Shields partner list (decision 2026-10-02): a system on the list is "Managed or partnered" by
     Shields Health Solutions. Matched on distinctive name tokens plus a footprint state.
 Also notes URAC certificates past their roster expiration date; per decision 2026-10-02 they are
@@ -40,8 +41,12 @@ LIST_COLS = ["pharmacy_names", "accreditations", "evidence_urls", "confirmed_can
 def check(r: dict) -> dict:
     notes = []
     tier, conf = r.get("tier"), r.get("confidence")
-    if (r.get("status_since_2023") or "").lower() == "closed":
-        return {**r, "tier": "", "confidence": "", "rule_adjustments": ""}
+    status = (r.get("status_since_2023") or "").strip()
+    if status and not r.get("status_evidence_url"):
+        notes.append(f"status '{status}' has no evidence URL -> unverified")
+        r = {**r, "status_since_2023": "unverified"}
+    if status.lower() == "closed" and r["status_since_2023"] == "closed":
+        return {**r, "tier": "", "confidence": "", "rule_adjustments": "; ".join(notes)}
     if tier not in TIERS:
         notes.append(f"tier '{tier}' not allowed -> Unknown")
         tier = "Unknown"
@@ -87,7 +92,7 @@ def apply_shields(df: pd.DataFrame, systems: pd.DataFrame) -> pd.DataFrame:
     df["shields_list_match"] = [
         shields_match(tokens(r.system_name) | tokens(r.current_name), fp.get(r.system_id, set()) | {r.hq_state}, shields)
         for r in df.fillna("").itertuples()]
-    on_list = (df.shields_list_match != "") & (df.tier != "")
+    on_list = (df.shields_list_match != "") & (df.tier != "") & df.reviewed
     change = on_list & (df.tier != "Managed or partnered")
     df.loc[change, "rule_adjustments"] = (df.loc[change, "rule_adjustments"].fillna("") + "; on Shields partner list: "
                                           + df.loc[change, "tier"] + " -> Managed or partnered").str.lstrip("; ")
@@ -105,7 +110,7 @@ def urac_expiring(df: pd.DataFrame, as_of: date) -> pd.Series:
     exp = pd.to_datetime(exp, errors="coerce")
 
     def flag(acc):
-        out = [f"{c} expires {exp[c]:%Y-%m-%d}" for c in re.findall(r"SP[PS]\d{6}|IPP\d{6}", acc or "")
+        out = [f"{c} expires {exp[c]:%Y-%m-%d}" for c in re.findall(r"SP[PS]\d{6}|IPP\d{6}", acc if isinstance(acc, str) else "")
                if c in exp.index and pd.notna(exp[c]) and exp[c].date() <= as_of]
         return "; ".join(out)
     return df.accreditations.map(flag)
@@ -119,7 +124,8 @@ def main() -> None:
     args = ap.parse_args()
     default = {"pilot": RAW / "phase3_packets" / "group_*_result.json", "full": RAW / "phase3_full" / "group_*_result.json"}
     results = args.results or str(default[args.tag])
-    overrides = args.overrides or (str(RAW / "phase3_packets" / "pilot_refresh_result.json") if args.tag == "pilot" else None)
+    overrides = args.overrides or str({"pilot": RAW / "phase3_packets" / "pilot_refresh_result.json",
+                                       "full": RAW / "phase3_full" / "status_sweep_*.json"}[args.tag])
 
     by_id = {}
     for pattern in [results] + ([overrides] if overrides else []):
@@ -134,7 +140,8 @@ def main() -> None:
         df[c] = df[c].map(lambda v: " | ".join(map(str, v)) if isinstance(v, list) else (v or ""))
     systems = pd.read_csv(OUT / f"phase3_{args.tag}_systems.csv")
     df = systems[["system_id", "hq_state", "total_beds"]].merge(df, on="system_id", how="left", validate="one_to_one")
-    missing = df.tier.isna().sum()
+    df["reviewed"] = df.tier.notna()
+    missing = (~df.reviewed).sum()
     df["system_name"] = df.system_name.fillna(df.system_id.map(systems.set_index("system_id").system_name))
     df["tier"] = df.tier.fillna("Unknown")
     df = apply_shields(df, systems)
