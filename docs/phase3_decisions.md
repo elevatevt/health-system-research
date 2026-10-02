@@ -2,10 +2,11 @@
 
 | Date (ET) | Decision | By |
 |---|---|---|
-| 2026-10-02 | Full run classifies systems as they exist today, to the extent possible (not as of the 2023 Compendium). | Nate |
+| 2026-10-02 | Full run classifies systems as they exist today, to the extent possible. | Nate |
+| 2026-10-02 | Status rules approved: renamed → classify under new name; acquired/merged → acquirer's pharmacy if it serves these hospitals ("via X"), flag duplicates; partly closed → operating hospitals; closed → no tier, excluded from counts. List stays the 480 AHRQ systems; revenue/hospital data stay 2023. | Nate |
+| 2026-10-02 | Appearing on the Shields Health Solutions partner list is enough for "Managed or partnered" (applied in consolidate.py from the list retrieved 2026-10-02). | Nate |
+| 2026-10-02 | URAC/ACHC accreditation counts as current until a lapse is confirmed, even past the roster expiration date. | Nate |
+| 2026-10-02 | Full run chunked: ~1M tokens now (groups 001–009 + pilot refresh), remainder scheduled 2026-10-02 14:30 EDT. | Nate |
 
-## Open (from pilot review)
-1. Evidence threshold for "Managed or partnered" (partner-list mention vs. press release naming the partner).
-2. Whether a parent entity's or JV's pharmacy counts as system-owned (Mayo Foundation; UPMC/Chartwell).
-3. Treatment of URAC certificates past their roster expiration date.
-4. How "as they exist today" applies to renamed, acquired, merged and closed systems (proposal pending approval).
+## Default applied, awaiting confirmation
+- Parent/JV: a pharmacy held by a parent that controls the system counts as system-owned (Mayo Foundation). A co-owned JV counts only when the system has no wholly owned specialty pharmacy, and is "Managed or partnered" if an outside manager runs it (UPMC/Chartwell not counted).
