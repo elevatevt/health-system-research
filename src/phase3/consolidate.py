@@ -46,7 +46,7 @@ def check(r: dict, require_query: bool = True) -> dict:
     notes = []
     tier, conf = r.get("tier"), r.get("confidence")
     parent = (r.get("current_parent") or "").lower()
-    fp = str(r.get("now_for_profit", "")).lower() == "true" or any(n in parent for n in FOR_PROFIT_PARENTS)
+    fp = str(r.get("now_for_profit", "")).lower() == "true" or any(re.search(rf"\b{re.escape(n)}\b", parent) for n in FOR_PROFIT_PARENTS)
     if fp:
         if str(r.get("now_for_profit", "")).lower() != "true":
             notes.append(f"current parent '{r.get('current_parent')}' is for-profit -> now_for_profit")

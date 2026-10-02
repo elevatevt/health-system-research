@@ -1,17 +1,17 @@
 # Phase 3 full classification (455 systems)
 
-Systems with no reviewer result: 325. Rule adjustments: 46. URAC certificates past roster expiry (treated as current): 4.
+Systems with no reviewer result: 325. Rule adjustments: 45. URAC certificates past roster expiry (treated as current): 4.
 
 | Tier | Systems |
 |---|---|
 | Owned, accredited | 70 |
 | Owned, not accredited | 8 |
-| Managed or partnered | 45 |
+| Managed or partnered | 46 |
 | Infusion or home infusion only | 2 |
 | None found | 2 |
 | Unknown | 327 |
 | (closed, no tier) | 0 |
-| (now for-profit, excluded) | 1 |
+| (now for-profit, excluded) | 0 |
 
 | System | HQ | Status | Tier | Conf. | Partner | Source | Notes |
 |---|---|---|---|---|---|---|---|
@@ -138,7 +138,7 @@ Systems with no reviewer result: 325. Rule adjustments: 46. URAC certificates pa
 | CoxHealth | MO | unchanged  | Owned, accredited | High |  | ACHC Specialty Pharmacy Services records + CoxHealth web page + NPPES | Not on Shields list; no outside manager found. Cox College closure is unrelated to pharmacy.  |
 | Rush System for Health | IL | unchanged -> Rush University System for Health | Managed or partnered | High | Shields Health Solutions | Shields partner list (Rush University System for Health, Aurora IL) + Shields press release + URAC/ACHC records | Search noise: Rush Health Systems (MS) merged into Ochsner is a different entity. Rush has an owned accredited pharmacy but Shields precedence applies.  |
 | Essentia Health | MN | unchanged  | Owned, accredited | High |  | URAC + ACHC Specialty Pharmacy records + NPPES + Essentia pharmacy listings | HealthPartners merger announced 2026-09-29 for 2027 (not yet effective), so status is unchanged for now; may become 'merged into HealthPartners'. Not on Shields list.  |
-| Saint Lukes Health System | MO | merged into -> Saint Luke's Health System (BJC HealthCare) |  |  | Shields Health Solutions | via BJC HealthCare: BJC on Shields partner list (incl. Iola, KS = Allen County Regional Hospital, a Saint Luke's member); owned accredited Saint Luke's Specialty Pharmacy also confirmed | Shields listing is BJC-level; no evidence it manages the Saint Luke's KC pharmacy itself, so Medium. Tier would be Owned, accredited if the Shields rule were not applied. **current parent 'BJC HealthCare' is for-profit -> now_for_profit** |
+| Saint Lukes Health System | MO | merged into -> Saint Luke's Health System (BJC HealthCare) | Managed or partnered | Medium | Shields Health Solutions | via BJC HealthCare: BJC on Shields partner list (incl. Iola, KS = Allen County Regional Hospital, a Saint Luke's member); owned accredited Saint Luke's Specialty Pharmacy also confirmed | Shields listing is BJC-level; no evidence it manages the Saint Luke's KC pharmacy itself, so Medium. Tier would be Owned, accredited if the Shields rule were not applied.  |
 | Lifespan | RI | renamed -> Brown University Health | Owned, accredited | High |  | URAC Specialty Pharmacy record + Brown University Health pharmacy page + NPPES specialty taxonomy | Care New England (not Lifespan/Brown) is the Shields-listed Rhode Island partner. URAC expiry 2026-10-01 treated as current per rule.  |
 | Baystate Health | MA | unchanged  | Managed or partnered | High | Shields Health Solutions | Shields partner list (Baystate Health, Springfield MA) plus URAC and ACHC records | Baystate is acquiring Mercy Medical Center, expected effective 2026-11-01 pending approval; system itself unchanged. Shields partner rule drives tier.  |
 | Cone Health | NC | acquired by  | Owned, accredited | High |  | URAC and ACHC records plus Cone Health specialty pharmacy web page; Risant (nonprofit, Kaiser-backed) has no pharmacy serving these hospitals | Acquired by Risant Health 2024-12-03 but keeps name and brand; pharmacy remains Cone-owned. Shields list does not include Cone.  |
