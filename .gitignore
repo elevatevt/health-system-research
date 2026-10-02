@@ -1,0 +1,6 @@
+# Raw downloads never enter the repo
+data/raw/
+.venv/
+__pycache__/
+*.pyc
+~$*
