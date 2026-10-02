@@ -1,0 +1,26 @@
+system_id,system_name,hq_city,hq_state,footprint_states,size_band,n_hospitals,n_acute_hospitals,total_beds,npr_compendium,ownership_label
+HSI00001396,Cape Regional Health System,Cape May Court House,NJ,NJ,Q1 smallest,1,1,149.0,130402745.0,nonprofit
+HSI00000301,Day Kimball Healthcare,Putnam,CT,CT,Q1 smallest,1,1,104.0,115441752.0,nonprofit
+HSI00000619,Marshall Medical Center,Placerville,CA,CA,Q1 smallest,1,1,111.0,315837581.0,nonprofit
+HSI00001281,Astria Health System,Sunnyside,WA,WA,Q1 smallest,2,2,72.0,171165690.0,nonprofit
+HSI00001003,Southeast Alaska Regional Health Consortium,Juneau,AK,AK,Q1 smallest,4,4,45.0,33822232.0,nonprofit
+HSI00000052,Arnot Health,Elmira,NY,NY,Q2,3,3,206.0,328076798.0,nonprofit
+HSI00000063,Augusta Health,Fishersville,VA,VA,Q2,1,1,193.0,448911975.0,nonprofit
+HSI00000527,Jefferson Hospital Association,Pine Bluff,AR,AR,Q2,1,1,245.0,201717365.0,nonprofit
+HSI00000870,Regional One Health,Memphis,TN,TN,Q2,2,1,291.0,407880356.0,nonprofit
+HSI00000188,Catholic Medical Center,Manchester,NH,NH,Q2,1,1,262.0,480789746.0,nonprofit
+HSI00001275,Yuma Regional Medical Center,Yuma,AZ,AZ,Q3,1,1,430.0,732517265.0,nonprofit
+HSI00000107,Benefis Health System,Great Falls,MT,MT,Q3,3,3,362.0,574592780.0,nonprofit
+HSI00000579,Lexington Medical Center,West Columbia,SC,SC,Q3,1,1,541.0,1513233364.0,nonprofit
+HSI00001076,The Childrens Mercy Hospital,Kansas City,MO,KS;MO,Q3,2,2,370.0,1549883138.0,nonprofit
+HSI00000874,Renown Health,Reno,NV,NV,Q3,3,2,592.0,1098864687.0,nonprofit
+HSI00000224,Cincinnati Childrens Hospital Medical Center,Cincinnati,OH,OH,Q4,1,1,711.0,2508408288.0,nonprofit
+HSI00000569,Lakeland Regional Health,Lakeland,FL,FL,Q4,1,1,764.0,1033363360.0,nonprofit
+HSI00000057,Aspirus,Wausau,WI,MI;WI,Q4,16,16,699.0,1116510138.0,nonprofit
+HSI00001236,WakeMed Health and Hospitals,Raleigh,NC,NC,Q4,2,2,839.0,1673846596.0,nonprofit
+HSI00000848,ProMedica,Toledo,OH,MI;OH,Q4,11,11,1272.0,2417175600.0,nonprofit
+HSI00000516,Intermountain Healthcare,Salt Lake City,UT,CO;ID;MT;UT,Q5 largest,33,31,3938.0,9587507849.0,nonprofit
+HSI00001081,Houston Methodist,Houston,TX,TX,Q5 largest,8,7,2653.0,6281664751.0,nonprofit
+HSI00000152,Christus Health,Irving,TX,LA;NM;TX,Q5 largest,32,26,3916.0,6098506336.0,church-operated
+HSI00000631,Mayo Clinic Health System,Rochester,MN,AZ;FL;IA;MN;WI,Q5 largest,26,25,2792.0,10758468039.0,nonprofit
+HSI00001126,UPMC,Pittsburgh,PA,MD;NY;PA,Q5 largest,34,32,5972.0,10134615484.0,nonprofit
